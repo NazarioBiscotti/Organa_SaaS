@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏢 Organa
 
-## Getting Started
 
-First, run the development server:
+Organa is a workspace platform for managing organizations, teams and shared knowledge.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Users can create organizations, manage areas and documents, and collaborate through a role-based membership system.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Features
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+🔐 Authentication with Auth.js Credentials + bcrypt  
+🏢 Organization management  
+👥 Membership system with ADMIN and MEMBER roles  
+📩 Join request workflow  
+📁 Areas management  
+📄 Documents management  
+🔒 Server-side authorization  
+⚡ Server Actions  
+🔄 Database transactions  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 Key Concepts
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project focuses on building a secure multi-organization architecture:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+- Authentication and protected routes
+- Role-based authorization
+- Organization-based data isolation
+- Server-side user identification
+- Relational data modeling with Prisma
+- Atomic database operations with transactions
+- CRUD operations through Server Actions
+
+
+## 🛠 Tech Stack
+
+
+**Frontend**
+
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+
+
+**Backend**
+
+
+- Next.js Server Actions
+- Auth.js
+- Prisma 7
+- PostgreSQL
+- Neon
+- bcrypt
+
+
+## 🧩 Data Model
+
+
+The application is built around the following relationships:
+
+
+```text
+User
+  ↓
+Membership
+  ↓
+Organization
+  ↓
+Area
+  ↓
+Document
+
+
+User ─── JoinRequest ─── Organization
+
+Memberships connect users to organizations and define their role.
+
+Join requests allow users to request access to organizations and follow an approval workflow:
+
+PENDING → APPROVED → MEMBER
+        ↘ REJECTED
+🔐 Authorization
+
+All protected operations verify the current user's session and organization membership server-side.
+
+The user ID is always retrieved from the authenticated session rather than trusted from client input.
+
+Role-based permissions distinguish between ADMIN and MEMBER operations.
+
+⚙️ Architecture
+app/          → Next.js pages and routes
+actions/      → Server Actions
+lib/          → shared utilities and Prisma client
+prisma/       → database schema and migrations
+auth.ts       → Auth.js configuration
+🎯 Project Goal
+
+The goal of Organa is to provide a simple and structured workspace where organizations can manage their internal knowledge through areas and documents while maintaining clear membership and authorization rules.
+
+📌 Status
+
+Project in development — MVP stage.
+
+👤 Author
+
+Nazario Biscotti
