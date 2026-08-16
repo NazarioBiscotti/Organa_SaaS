@@ -8,7 +8,7 @@ export default async function Navbar() {
   return (
     <>
     <nav className="sticky top-0 z-50 border-b bg-gray-800/20 backdrop-blur-xl ">
-      <div className=" flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 bg-amber-400">
+      <div className=" flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
      
 
         {/* Navigation */}
