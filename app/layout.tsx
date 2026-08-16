@@ -39,10 +39,14 @@ export default function RootLayout({
         />
       </head>
       <body  className="font-sans antialiased mybody">
+
+
         <Navbar />
       
+      <div className="p-2">
 
         {children}
+      </div>
        
       </body>
     </html>

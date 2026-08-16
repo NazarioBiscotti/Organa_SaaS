@@ -7,24 +7,9 @@ export default async function Navbar() {
 
   return (
     <>
-    <nav className="sticky top-0 z-50 border-b bg-gray-800/20 backdrop-blur-xl">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex min-w-0 shrink-0 items-center gap-2 text-xl font-semibold sm:text-2xl"
-        >
-          <div className="hidden">
-
-          <img
-            src="/files/OrganaLogo.png"
-            alt="Organa"
-            className="h-8 w-8 object-contain"
-          />
-
-          <span className="logo">Organa</span>
-          </div>
-        </Link>
+    <nav className="sticky top-0 z-50 border-b bg-gray-800/20 backdrop-blur-xl ">
+      <div className=" flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 bg-amber-400">
+     
 
         {/* Navigation */}
         <div className="flex w-full justify-between items-center gap-3 text-sm sm:gap-5 sm:text-base">
@@ -78,33 +63,32 @@ export default async function Navbar() {
           {/* Topbar  */}
     </nav>
 
-    <div className="block md:hidden ">
+    <div className="flex justify-center w-full  md:hidden p-1 ">
 
-       <div className="m-auto flex border-r p-3 mt-3 rounded-3xl border w-fit">
+       <div className=" flex justify-evenly gap-5 mt-3 rounded-3xl border p-2 w-full">
      
 
-      <nav className="flex gap-2">
         <Link
-          className="rounded px-3 py-2 hover:bg-neutral-100"
+          className="rounded  hover:bg-neutral-100"
           href="/dashboard"
         >
           Dashboard
         </Link>
 
         <Link
-          className="rounded px-3 py-2 hover:bg-neutral-100"
+          className="rounded  hover:bg-neutral-100"
           href="/dashboard/areas"
         >
           Areas
         </Link>
 
         <Link
-          className="rounded px-3 py-2 hover:bg-neutral-100"
+          className="rounded  hover:bg-neutral-100"
           href="/dashboard/documents"
         >
           Documents
         </Link>
-      </nav>
+
     </div>
     </div>
     </>
