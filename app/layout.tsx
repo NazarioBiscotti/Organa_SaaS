@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "My SaaS",
-  description: "My SaaS application",
+  title: "Organa",
+  description: "Organa application",
 };
 
 

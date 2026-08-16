@@ -39,8 +39,7 @@ export default async function AreaPage({ params }: Props) {
     notFound();
   }
 
-  // Verifica che l'utente appartenga
-  // all'Organization dell'Area.
+
   const membership = await prisma.membership.findFirst({
     where: {
       userId,
@@ -53,6 +52,7 @@ export default async function AreaPage({ params }: Props) {
   }
 
   return (
+    
     <main>
       {/* AREA HEADER */}
 

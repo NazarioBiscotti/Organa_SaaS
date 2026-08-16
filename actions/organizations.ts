@@ -3,7 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { log } from "console";
+import { revalidatePath } from "next/cache";
+
 
 export async function createOrganization(formData: FormData) {
   const session = await auth();
@@ -53,7 +54,7 @@ export async function createOrganization(formData: FormData) {
   });
 
   redirect(
-    `/dashboard/areas?organization=${result.id}`
+    `/dashboard`
   );
 }
 
@@ -216,4 +217,27 @@ export async function rejectJoinRequest(formData: FormData) {
   });
 
   redirect("/dashboard");
+}
+
+export async function undoRequest(formData:FormData) {
+
+
+    const id = formData.get("id") as string
+    const requestId = Number(id)
+
+    await prisma.joinRequest.delete({
+
+      where : {
+
+        id : requestId
+
+      }
+
+    })
+
+
+    revalidatePath("/dashboard/requests")
+    
+
+  
 }

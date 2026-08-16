@@ -29,9 +29,7 @@ export default async function DocumentsPage({
     ? Number(areaId)
     : undefined;
 
-  /*
-   * ORGANIZATIONS DELL'UTENTE
-   */
+
 
   const memberships = await prisma.membership.findMany({
     where: {
@@ -43,9 +41,7 @@ export default async function DocumentsPage({
     (membership) => membership.organizationId
   );
 
-  /*
-   * AREAS DELL'UTENTE
-   */
+
 
   const areas = await prisma.area.findMany({
     where: {
@@ -58,9 +54,7 @@ export default async function DocumentsPage({
     },
   });
 
-  /*
-   * AREA SELEZIONATA
-   */
+
 
   const selectedArea = selectedAreaId
     ? areas.find(
@@ -68,12 +62,7 @@ export default async function DocumentsPage({
       )
     : undefined;
 
-  /*
-   * DOCUMENTS DELL'UTENTE
-   *
-   * Un Document appartiene a una Area,
-   * che appartiene a una Organization.
-   */
+ 
 
   const documents = await prisma.document.findMany({
     where: {
@@ -91,10 +80,7 @@ export default async function DocumentsPage({
     },
   });
 
-  /*
-   * Se viene passato un areaId che non appartiene
-   * all'utente, non permettiamo di usarlo.
-   */
+
 
   if (selectedAreaId && !selectedArea) {
     redirect("/dashboard/documents");

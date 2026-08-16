@@ -38,6 +38,7 @@ export default async function AreasPage({
     },
     include: {
       organization: true,
+      role: true,
     },
   });
 
@@ -70,6 +71,10 @@ export default async function AreasPage({
     (membership) => membership.organization
   );
 
+  const isAdmin = memberships.some(
+  (membership) => membership.role.name === "ADMIN"
+);
+
   return (
     <main>
       {/* HEADER */}
@@ -87,12 +92,12 @@ export default async function AreasPage({
       {/* AREAS */}
 
       <section>
-        <h2 className="text-2xl font-semibold mb-5">
+        <h2 className="mb-5 text-2xl font-semibold">
           Your Areas
         </h2>
 
         {areas.length === 0 ? (
-          <div className="border rounded p-8">
+          <div className="rounded border p-8">
             <h3 className="text-lg font-semibold">
               No areas yet
             </h3>
@@ -104,92 +109,110 @@ export default async function AreasPage({
           </div>
         ) : (
           <div className="grid gap-5">
-            {areas.map((area) => (
-              <div
-                key={area.id}
-                className="border rounded p-5"
-              >
-                <h3 className="text-xl font-semibold">
-                  {area.name}
-                </h3>
+            {areas.map((area) => {
+              const membership = memberships.find(
+                (membership) =>
+                  membership.organizationId ===
+                  area.organizationId
+              );
 
-                <p className="mt-2 text-neutral-500">
-                  {area.description}
-                </p>
+              const isAdmin =
+                membership?.role.name === "ADMIN";
 
-                <p className="mt-3 text-sm">
-                  Organization:{" "}
-                  {area.organization.name}
-                </p>
+              return (
+                <div
+                  key={area.id}
+                  className="rounded border p-5"
+                >
+                  <h3 className="text-xl font-semibold">
+                    {area.name}
+                  </h3>
 
-                <div className="flex gap-3 mt-5">
-                  <Link
-                    href={`/dashboard/areas/${area.id}`}
-                    className="border rounded px-3 py-2"
-                  >
-                    Open
-                  </Link>
+                  <p className="mt-2 text-neutral-500">
+                    {area.description}
+                  </p>
 
-                  <Link
-                    href={`/dashboard/areas/${area.id}/editForm`}
-                    className="border rounded px-3 py-2"
-                  >
-                    Edit
-                  </Link>
+                  <p className="mt-3 text-sm">
+                    Organization:{" "}
+                    {area.organization.name}
+                  </p>
 
-                  <form action={deleteArea}>
-                    <input
-                      type="hidden"
-                      name="id"
-                      value={area.id}
-                    />
-
-                    <button
-                      type="submit"
-                      className="border rounded px-3 py-2"
+                  <div className="mt-5 flex gap-3">
+                    {/* VISIBILE A TUTTI */}
+                    <Link
+                      href={`/dashboard/areas/${area.id}`}
+                      className="rounded border px-3 py-2"
                     >
-                      Delete
-                    </button>
-                  </form>
+                      Open
+                    </Link>
+
+                    {/* SOLO ADMIN */}
+                    {isAdmin && (
+                      <>
+                        <Link
+                          href={`/dashboard/areas/${area.id}/editForm`}
+                          className="rounded border px-3 py-2"
+                        >
+                          Edit
+                        </Link>
+
+                        <form action={deleteArea}>
+                          <input
+                            type="hidden"
+                            name="id"
+                            value={area.id}
+                          />
+
+                          <button
+                            type="submit"
+                            className="rounded border px-3 py-2"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>
 
       {/* CREATE AREA */}
 
+      {isAdmin && (
+
+
       <section className="mt-10">
-        <h2 className="text-2xl font-semibold mb-5">
+        <h2 className="mb-5 text-2xl font-semibold">
           Create a new area
         </h2>
 
         <form
-          className="border rounded p-5 flex flex-col gap-3 max-w-md"
+          className="flex max-w-md flex-col gap-3 rounded border p-5"
           action={createArea}
         >
           <input
-            className="border rounded p-2"
+            className="rounded border p-2"
             placeholder="Name"
             name="name"
             type="text"
           />
 
           <input
-            className="border rounded p-2"
+            className="rounded border p-2"
             placeholder="Description"
             name="description"
             type="text"
           />
 
           <select
-            className="border rounded p-2"
+            className="rounded border p-2"
             name="organization"
             id="organization"
-            defaultValue={
-              organizationId ?? ""
-            }
+            defaultValue={organizationId ?? ""}
           >
             {!organizationId && (
               <option
@@ -211,13 +234,17 @@ export default async function AreasPage({
           </select>
 
           <button
-            className="border rounded p-2"
+            className="rounded border p-2"
             type="submit"
           >
             Create Area
           </button>
         </form>
       </section>
+
+
+
+      )}
     </main>
   );
 }

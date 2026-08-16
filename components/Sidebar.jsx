@@ -3,11 +3,7 @@ import Link from "next/link";
 export default function Sidebar() {
   return (
     <aside className="w-56 border-r min-h-screen p-5">
-      <div className="mb-8">
-        <h2 className="text-xl font-bold">
-          Mini CRM
-        </h2>
-      </div>
+     
 
       <nav className="flex flex-col gap-2">
         <Link
