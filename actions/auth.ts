@@ -3,6 +3,11 @@
 
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
+
+export type LoginState = {
+  error?: string;
+};
 
 export async function register(formData: FormData) {
   const name = String(
@@ -81,11 +86,27 @@ export async function register(formData: FormData) {
       });
     }
   });
+
+  redirect("/login")
 }
 
-export async function login(formData: FormData) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+export async function login(
+  prevState: LoginState,
+  formData: FormData
+): Promise<LoginState> {
+  const email = String(
+    formData.get("email") ?? ""
+  ).trim();
+
+  const password = String(
+    formData.get("password") ?? ""
+  );
+
+  if (!email || !password) {
+    return {
+      error: "Email e password sono obbligatori",
+    };
+  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -94,7 +115,9 @@ export async function login(formData: FormData) {
   });
 
   if (!user) {
-    throw new Error("Email o password non corretti");
+    return {
+      error: "Email o password non corretti",
+    };
   }
 
   const correctPassword = await bcrypt.compare(
@@ -103,9 +126,13 @@ export async function login(formData: FormData) {
   );
 
   if (!correctPassword) {
-    throw new Error("Email o password non corretti");
+    return {
+      error: "Email o password non corretti",
+    };
   }
 
-  console.log("Login riuscito:", user.email);
+
+
+  return {};
 }
 

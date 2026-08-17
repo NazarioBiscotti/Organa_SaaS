@@ -78,14 +78,14 @@ export default async function AreaPage({ params }: Props) {
       {/* DOCUMENTS */}
 
       <section>
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-2xl font-semibold">
+        <div className="flex-col items-center justify-between mb-5">
+          <h2 className="text-2xl font-semibold my-5">
             Documents
           </h2>
 
           <Link
             href={`/dashboard/documents?areaId=${area.id}`}
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 mb-5"
           >
             + New Document
           </Link>

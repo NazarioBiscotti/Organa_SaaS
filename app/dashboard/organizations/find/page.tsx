@@ -51,7 +51,7 @@ export default async function findOrganizzation() {
               />
 
               <button
-                className="border my-5 rounded p-3"
+                className="border my-5 rounded p-3 hover:bg-white"
                 type="submit"
               >
                 Request to Join

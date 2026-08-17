@@ -54,12 +54,6 @@ export default async function EditDocumentPage({ params }: Props) {
     notFound();
   }
 
-  /*
-   * AREAS
-   *
-   * Mostriamo solo le Areas appartenenti
-   * alle Organization dell'utente.
-   */
 
   const areas = await prisma.area.findMany({
     where: {
@@ -75,6 +69,22 @@ export default async function EditDocumentPage({ params }: Props) {
       name: "asc",
     },
   });
+
+  
+  const memberships = await prisma.membership.findMany({
+    where: {
+      userId,
+    },
+
+    include: {
+      role: true,
+    },
+  });
+
+  const isAdmin = memberships[0].role.name === "ADMIN"
+    
+
+  
 
   return (
     <main>
@@ -103,6 +113,7 @@ export default async function EditDocumentPage({ params }: Props) {
           type="hidden"
           name="id"
           value={document.id}
+          
         />
 
         {/* TITLE */}
@@ -121,6 +132,7 @@ export default async function EditDocumentPage({ params }: Props) {
             type="text"
             defaultValue={document.title}
             className="border rounded p-2 w-full"
+            required
           />
         </div>
 
@@ -140,6 +152,7 @@ export default async function EditDocumentPage({ params }: Props) {
             defaultValue={document.content}
             className="border rounded p-2 w-full"
             rows={12}
+            required
           />
         </div>
 
@@ -172,6 +185,8 @@ export default async function EditDocumentPage({ params }: Props) {
 
         {/* ACTIONS */}
 
+        {isAdmin && (
+
         <div className="flex gap-3">
           <button
             type="submit"
@@ -187,6 +202,9 @@ export default async function EditDocumentPage({ params }: Props) {
             Cancel
           </Link>
         </div>
+
+        )}
+
       </form>
     </main>
   );
