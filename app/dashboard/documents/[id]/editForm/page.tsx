@@ -27,12 +27,7 @@ export default async function EditDocumentPage({ params }: Props) {
     notFound();
   }
 
-  /*
-   * DOCUMENT
-   *
-   * Recuperiamo il Document solo se appartiene
-   * a un'Organization di cui l'utente è membro.
-   */
+
 
   const document = await prisma.document.findFirst({
     where: {

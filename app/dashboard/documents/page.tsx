@@ -68,7 +68,9 @@ export default async function DocumentsPage({ searchParams }: Props) {
     },
   });
 
-  const isAdmin = memberships[0].role.name === "ADMIN";
+  const isAdmin = memberships.some(
+  (membership) => membership.role.name === "ADMIN"
+);
 
   if (selectedAreaId && !selectedArea) {
     redirect("/dashboard/documents");
