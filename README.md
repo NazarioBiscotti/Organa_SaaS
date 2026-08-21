@@ -109,4 +109,4 @@ Project in development — MVP stage.
 
 👤 Author
 
-Nazario Biscotti
+Nazario Biscottia
