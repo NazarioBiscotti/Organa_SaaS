@@ -173,8 +173,7 @@ export async function deleteDocument(formData: FormData) {
     throw new Error("Document non trovato");
   }
 
-  // L'utente deve appartenere
-  // all'Organization dell'Area.
+ 
 const membership = await prisma.membership.findFirst({
   where: {
     userId,

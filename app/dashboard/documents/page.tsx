@@ -76,6 +76,11 @@ export default async function DocumentsPage({ searchParams }: Props) {
     redirect("/dashboard/documents");
   }
 
+
+
+
+
+
   return (
     <main>
       {/* HEADER */}
